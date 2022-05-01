@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "db-mysql-fra1-84859-do-user-11242390-0.b.db.ondigitalocean.com",
+      "port": 25060,
+      "askForPassword": true,
+      "driver": "MySQL",
+      "name": "Gym app",
+      "database": "defaultdb",
+      "username": "doadmin"
+    }
+  ]
+}
