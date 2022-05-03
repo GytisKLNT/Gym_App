@@ -3,9 +3,11 @@ const mysql = require('mysql2/promise');
 
 const { mysqlConfig } = require('../../config');
 
+const { isLoggedIn } = require('../../middleware');
+
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
   try {
     const con = await mysql.createConnection(mysqlConfig);
     const [data] = await con.execute(`

@@ -5,6 +5,19 @@ const { mysqlConfig } = require('../../config');
 
 const router = express.Router();
 
+router.get('/:id', async (req, res) => {
+  try {
+    const con = await mysql.createConnection(mysqlConfig);
+    const [data] = await con.execute('SELECT * FROM sets');
+    await con.end();
+
+    return res.send(data.filter((item) => item.user_id === Number(req.params.id)));
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ err: 'An issue was found. Please try again later.' });
+  }
+});
+
 router.post('/', async (req, res) => {
   // eslint-disable-next-line max-len
   if (!req.body.user_id || !req.body.exercise_id || !req.body.weight || !req.body.sets || !req.body.reps) {
@@ -22,6 +35,7 @@ router.post('/', async (req, res) => {
         ${mysql.escape(req.body.sets)},
         ${mysql.escape(req.body.reps)})
       `);
+    await con.end();
 
     if (!data.insertId || data.affectedRows !== 1) {
       console.log(data);
