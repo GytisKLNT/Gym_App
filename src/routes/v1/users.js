@@ -4,30 +4,27 @@ const mysql = require('mysql2/promise');
 
 const bcrypt = require('bcrypt');
 
+const Joi = require('joi');
+
 const jsonwebtoken = require('jsonwebtoken');
 
 const { mysqlConfig, jwtSecret } = require('../../config');
+const validation = require('../../middleware/validation');
 
 const router = express.Router();
 
-// router.get('/check', async (req, res) => {
-//   try {
-//     const con = await mysql.createConnection(mysqlConfig);
-//     const [data] = await con.execute('SHOW COLUMNS FROM users');
-//     await con.end();
+const registrationSchema = Joi.object({
+  name: Joi.string().trim().required(),
+  email: Joi.string().email().trim().required(),
+  password: Joi.string().required(),
+});
 
-//     return res.send(data);
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send({ err: 'A server issue has occured - please try again later.' });
-//   }
-// });
+const loginSchema = Joi.object({
+  email: Joi.string().email().trim().required(),
+  password: Joi.string().required(),
+});
 
-router.post('/register', async (req, res) => {
-  if (!req.body.name || !req.body.email || !req.body.password) {
-    return res.status(400).send({ err: 'Incorect data passed' });
-  }
-
+router.post('/register', validation(registrationSchema), async (req, res) => {
   try {
     const hash = bcrypt.hashSync(req.body.password, 10);
     const con = await mysql.createConnection(mysqlConfig);
@@ -37,7 +34,6 @@ router.post('/register', async (req, res) => {
     await con.end();
 
     if (!data.insertId || data.affectedRows !== 1) {
-      console.log(data);
       return res.status(500).send({ err: 'An issue was found. Please try again later.' });
     }
 
@@ -46,16 +42,11 @@ router.post('/register', async (req, res) => {
       userId: data.insertId,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).send({ err: 'An issue was found. Please try again later.' });
   }
 });
 
-router.post('/login', async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ err: 'Incorect data passed' });
-  }
-
+router.post('/login', validation(loginSchema), async (req, res) => {
   try {
     const con = await mysql.createConnection(mysqlConfig);
     const [data] = await con.execute(`
@@ -77,7 +68,6 @@ router.post('/login', async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).send({ err: 'An issue was found. Please try again later.' });
   }
 });

@@ -1,35 +1,40 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
+const Joi = require('joi');
 
+const isLoggedIn = require('../../middleware/auth');
+const validation = require('../../middleware/validation');
 const { mysqlConfig } = require('../../config');
 
 const router = express.Router();
 
-router.get('/:id', async (req, res) => {
+const setSchema = Joi.object({
+  weight: Joi.number().required(),
+  reps: Joi.number().required(),
+  sets: Joi.number().required(),
+  exercise_id: Joi.number().required(),
+});
+
+router.get('/', isLoggedIn, async (req, res) => {
   try {
     const con = await mysql.createConnection(mysqlConfig);
-    const [data] = await con.execute('SELECT * FROM sets');
+    const [data] = await con.execute(
+      `SELECT * FROM sets LEFT JOIN exercises ON sets.exercise_id = exercises.id WHERE user_id = ${req.user.accountId}`,
+    );
     await con.end();
-
-    return res.send(data.filter((item) => item.user_id === Number(req.params.id)));
+    return res.send(data);
   } catch (err) {
-    console.log(err);
     return res.status(500).send({ err: 'An issue was found. Please try again later.' });
   }
 });
 
-router.post('/', async (req, res) => {
-  // eslint-disable-next-line max-len
-  if (!req.body.user_id || !req.body.exercise_id || !req.body.weight || !req.body.sets || !req.body.reps) {
-    res.status(400).send({ err: 'Incorect data passed' });
-  }
-
+router.post('/', isLoggedIn, validation(setSchema), async (req, res) => {
   try {
     const con = await mysql.createConnection(mysqlConfig);
     const [data] = await con.execute(`
         INSERT INTO sets (user_id, exercise_id, weight, sets, reps)
         VALUES (
-        ${mysql.escape(req.body.user_id)},
+        ${mysql.escape(req.user.accountId)},
         ${mysql.escape(req.body.exercise_id)},
         ${mysql.escape(req.body.weight)},
         ${mysql.escape(req.body.sets)},
@@ -37,8 +42,7 @@ router.post('/', async (req, res) => {
       `);
     await con.end();
 
-    if (!data.insertId || data.affectedRows !== 1) {
-      console.log(data);
+    if (!data.insertId) {
       return res.status(500).send({ err: 'An issue was found. Please try again later.' });
     }
     return res.send({
@@ -46,7 +50,6 @@ router.post('/', async (req, res) => {
       userId: data.insertId,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).send({ err: 'An issue was found. Please try again later.' });
   }
 });
