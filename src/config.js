@@ -10,4 +10,6 @@ module.exports = {
     port: process.env.MYSQL_PORT,
   },
   jwtSecret: process.env.JWT_SECRET,
+  mailServer: process.env.MAIL_SERVER,
+  mailServerPassword: process.env.MAIL_SERVER_PASSWORD,
 };
