@@ -1,15 +1,12 @@
 const express = require('express');
-
 const mysql = require('mysql2/promise');
-
 const bcrypt = require('bcrypt');
-
 const Joi = require('joi');
-
 const jsonwebtoken = require('jsonwebtoken');
 
 const { mysqlConfig, jwtSecret } = require('../../config');
 const validation = require('../../middleware/validation');
+const isLoggedIn = require('../../middleware/auth');
 
 const router = express.Router();
 
@@ -22,6 +19,11 @@ const registrationSchema = Joi.object({
 const loginSchema = Joi.object({
   email: Joi.string().email().trim().required(),
   password: Joi.string().required(),
+});
+
+const changePassSchema = Joi.object({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required(),
 });
 
 router.post('/register', validation(registrationSchema), async (req, res) => {
@@ -68,6 +70,34 @@ router.post('/login', validation(loginSchema), async (req, res) => {
       token,
     });
   } catch (err) {
+    return res.status(500).send({ err: 'An issue was found. Please try again later.' });
+  }
+});
+
+router.post('/change', isLoggedIn, validation(changePassSchema), async (req, res) => {
+  try {
+    const con = await mysql.createConnection(mysqlConfig);
+    const [data] = await con.execute(`
+      SELECT password FROM users WHERE id = ${mysql.escape(req.user.accountId)} LIMIT 1`);
+
+    if (bcrypt.compareSync(req.body.oldPassword, data[0].password)) {
+      const hash = bcrypt.hashSync(req.body.newPassword, 10);
+
+      await con.execute(`
+        UPDATE users SET password = '${hash}' WHERE id = ${mysql.escape(req.user.accountId)}
+        `);
+
+      await con.end();
+
+      return res.send({
+        msg: 'Password changed',
+      });
+    }
+
+    await con.end();
+    return res.status(400).send({ err: 'Incorrect old password' });
+  } catch (err) {
+    console.log(err);
     return res.status(500).send({ err: 'An issue was found. Please try again later.' });
   }
 });
