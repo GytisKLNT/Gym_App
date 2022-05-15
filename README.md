@@ -67,6 +67,10 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
+3. Run app
+   ```sh
+   npm run dev
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
