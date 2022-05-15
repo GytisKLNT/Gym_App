@@ -41,6 +41,7 @@ This is Gym App Back-End server for gym app https://github.com/GytisKLNT/Gym_app
 ### Built With
 
 - [Node.js](https://nodejs.dev/)
+- [MySQL](https://www.mysql.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -104,5 +105,7 @@ Project Link: [https://github.com/GytisKLNT/Gym_App_BE](https://github.com/Gytis
 ## Acknowledgments
 
 - [npmjs](https://www.npmjs.com/)
+- [Postman](https://www.postman.com/)
+- [Beekeeper Studio](https://www.beekeeperstudio.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
