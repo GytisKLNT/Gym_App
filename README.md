@@ -1,1 +1,104 @@
-# gymApp-Backend
+  <h3 align="center">Gym App Back-End</h3>
+
+  <p align="center">
+    An awesome README template to jumpstart your projects!
+    <br />
+    <a href="https://github.com/GytisKLNT/Gym_App_BE"><strong>Explore the docs »</strong></a>
+
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+This is Gym App Back-End server for gym app https://github.com/GytisKLNT/Gym_app_FE that i made. It takes care of logins & data storage.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Built With
+
+- [Node.js](https://nodejs.dev/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/GytisKLNT/Gym_App_BE.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## Contributing
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Contact
+
+Your Name - Gytis - gytis.kalanta@gmail.com
+
+Project Link: [https://github.com/GytisKLNT/Gym_App_BE](https://github.com/GytisKLNT/Gym_App_BE)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- [npmjs](https://www.npmjs.com/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
