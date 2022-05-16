@@ -1,4 +1,4 @@
-  <h3 align="center">Gym App Back-End</h3>
+# ⛹️ Gym App Back-End
 
   <p align="center">
     An awesome README template to jumpstart your projects!
@@ -34,7 +34,11 @@
 
 ## About The Project
 
-This is Gym App Back-End server for gym app https://github.com/GytisKLNT/Gym_app_FE that i made. It takes care of logins & data storage.
+This is Gym App Back-End server for gym app https://github.com/GytisKLNT/Gym_app_FE that i made. It takes care of:
+
+- 🗝️ Auth
+- 💾 Data storage
+- 🌈 Everything nice
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -94,7 +98,8 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-Your Name - Gytis - gytis.kalanta@gmail.com
+Gytis - gytis.kalanta@gmail.com
+[LinkedIn](www.linkedin.com/in/gytis-kalanta)
 
 Project Link: [https://github.com/GytisKLNT/Gym_App_BE](https://github.com/GytisKLNT/Gym_App_BE)
 
